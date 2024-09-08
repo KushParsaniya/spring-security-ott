@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: spring-security-ott
+
+  docker:
+    compose:
+      enabled: false
+
+  datasource:
+    url: jdbc:postgresql://localhost/postgres
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+
+

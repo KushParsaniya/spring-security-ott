@@ -3,26 +3,37 @@ package dev.kush.springsecurityott.services;
 import dev.kush.springsecurityott.models.OneTimeTokens;
 import dev.kush.springsecurityott.models.OneTimeTokensImpl;
 import dev.kush.springsecurityott.repos.OneTimeTokensRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.ott.GenerateOneTimeTokenRequest;
 import org.springframework.security.authentication.ott.OneTimeToken;
 import org.springframework.security.authentication.ott.OneTimeTokenAuthenticationToken;
 import org.springframework.security.authentication.ott.OneTimeTokenService;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 @Component
 public class JdbcOneTimeTokenService implements OneTimeTokenService {
 
     private final OneTimeTokensRepository oneTimeTokensRepository;
+    private final UserDetailsManager userDetailsManager;
 
-    public JdbcOneTimeTokenService(OneTimeTokensRepository oneTimeTokensRepository) {
+    public JdbcOneTimeTokenService(OneTimeTokensRepository oneTimeTokensRepository, UserDetailsManager userDetailsManager) {
         this.oneTimeTokensRepository = oneTimeTokensRepository;
+        this.userDetailsManager = userDetailsManager;
     }
 
     @Override
+    @NonNull
     public OneTimeToken generate(GenerateOneTimeTokenRequest request) {
+
+//        if (!userDetailsManager.userExists(request.getUsername())) {
+//            return new OneTimeTokensImpl();
+//        }
+
         OneTimeTokens ott = new OneTimeTokens(request.getUsername(), UUID.randomUUID().toString());
         oneTimeTokensRepository.save(ott);
         return new OneTimeTokensImpl(ott);

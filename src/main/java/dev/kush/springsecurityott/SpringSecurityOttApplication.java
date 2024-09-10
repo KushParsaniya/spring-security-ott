@@ -20,17 +20,17 @@ public class SpringSecurityOttApplication {
     }
 
 //    @Bean
-//    ApplicationRunner applicationRunner(UserDetailsManager userDetailsManager, PasswordEncoder passwordEncoder) {
-//        return args -> {
-//            UserDetails u1 = new User(
-//                    "kush", passwordEncoder.encode("1234"), List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
-//
-//            UserDetails u2 = new User(
-//                    "abhi", passwordEncoder.encode("1234"), List.of(new SimpleGrantedAuthority("ROLE_USER")));
-//
-//            userDetailsManager.createUser(u1);
-//            userDetailsManager.createUser(u2);
-//        };
-//    }
+    ApplicationRunner applicationRunner(UserDetailsManager userDetailsManager, PasswordEncoder passwordEncoder) {
+        return args -> {
+            UserDetails u1 = new User(
+                    "kush", passwordEncoder.encode("1234"), List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
+
+            UserDetails u2 = new User(
+                    "abhi", passwordEncoder.encode("1234"), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+
+            userDetailsManager.createUser(u1);
+            userDetailsManager.createUser(u2);
+        };
+    }
 
 }

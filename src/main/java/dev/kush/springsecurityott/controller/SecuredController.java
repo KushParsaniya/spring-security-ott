@@ -25,11 +25,11 @@ public class SecuredController {
 
     @GetMapping("/user")
     public Map<String, String> user(Authentication authentication, HttpServletResponse response, HttpSession session) throws IOException {
-        response.setHeader("X-USER-ROLE","USER");
+//        response.setHeader("X-USER-ROLE","USER");
 //        Cookie cookie = new Cookie("X-USER-ROLE","USER");
 //        cookie.setAttribute("JSESSIONID",session.getId());
 //        response.addCookie(cookie);
-        response.sendRedirect("http://localhost:5173/");
+//        response.sendRedirect("http://localhost:5173/");
         return Map.of("message", "Hello user %s, welcome!".formatted(authentication.getName()));
     }
 
@@ -41,5 +41,10 @@ public class SecuredController {
     @GetMapping("/sent")
     public String sent(HttpServletResponse response) {
         return "<h1>We have send magic link to your mail</h1>";
+    }
+
+    @GetMapping("/any")
+    public String any() {
+        return "Any called";
     }
 }

@@ -30,14 +30,13 @@ public class OTTAuthenticationSuccessHandle implements AuthenticationSuccessHand
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         System.out.println("logged in as: -----------> " + authentication.getName());
 
+        final String scopes = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuedAt(Instant.now())
                 .issuedAt(Instant.now().plusSeconds(3000))
-                .claim("username", authentication.getName())
-                .claim("roles", authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
+                .subject(authentication.getName())
+                .claim("scope", scopes)
                 .build();
-
-
 
         var params = JwtEncoderParameters.from(claims);
 

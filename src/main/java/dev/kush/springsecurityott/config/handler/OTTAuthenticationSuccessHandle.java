@@ -41,6 +41,6 @@ public class OTTAuthenticationSuccessHandle implements AuthenticationSuccessHand
         var params = JwtEncoderParameters.from(claims);
 
         Jwt jwt = jwtEncoder.encode(params);
-        response.sendRedirect("http://localhost:5173?token=" + jwt.getTokenValue());
+        response.sendRedirect("http://localhost:5173/token/" + jwt.getTokenValue());
     }
 }
